@@ -1,0 +1,38 @@
+---
+- name: Template monasca-setup
+  template: dest=/usr/local/bin/monasca-reconfigure src=monasca-reconfigure.j2 owner=root mode=750
+
+- name: Template plugin specific configuration files
+  template: dest={{item.dest}} src={{item.src}} owner=root mode={{item.mode}}
+  when: ansible_hostname | search("{{item.hostname}}")
+  with_items:
+    - { hostname: "rabbit" , dest: "/root/.rabbitmq.cnf" , src: ".rabbitmq.cnf.j2" , mode: "640" }
+    - { hostname: "galera" , dest: "/root/.my.cnf" , src: ".my.cnf.j2" , mode: "640" }
+    - { hostname: "horizon" , dest: "/root/.apache.cnf" , src: ".apache.cnf.j2" , mode: "640" }
+
+- name: Grant permissions for process metrics collection
+  user: name=mon-agent groups={{item.groups}}
+  when: ansible_hostname | search("{{item.hostname}}")
+  with_items:
+    - { hostname: "horizon", groups: "www-data" }
+    - { hostname: "rabbit", groups: "rabbitmq" }
+
+- name: Enable rabbitmq api
+  command: /usr/sbin/rabbitmq-plugins enable rabbitmq_management
+  when: ansible_hostname | search("rabbit")
+
+- name: Run initial monasca-setup
+  command: /usr/local/bin/monasca-reconfigure
+
+# Reduce agent permissions
+# * remove shell from agent
+# * 
+
+
+- name: Enable monasca-agent service
+  service: name=monasca-agent state=started enabled=yes
+
+
+# import psutil
+# p=psutil.Process(560)
+# p.num_fds()
