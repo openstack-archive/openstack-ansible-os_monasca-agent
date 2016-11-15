@@ -2,7 +2,16 @@ monasca_agent_user: "monasca-agent"
 monasca_agent_password: "password"
 monasca_agent_service: "service"
 keystone_url: "http://{{internal_lb_vip_address}}:5000/v3"
-monasca_agent_project: "tbd"
+monasca_agent_project: "monasca-agent"
 monasca_agent_check_frequency: 60
 monasca_agent_system_only: false
 monasca_log_level: "WARN"
+monasca_agent_user_name: monasca-agent
+monasca_agent_password: test
+monasca_agent_project_name: monasca-agent
+monasca_agent_role_name: monasca-agent
+host_alive_check_hosts:
+extra_host_alive_checks:
+
+# implement
+skip_repo_utility_hosts: true

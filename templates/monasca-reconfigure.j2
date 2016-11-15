@@ -4,7 +4,7 @@
     -p '{{monasca_agent_password}}' \
     {% if monasca_agent_service is defined %} -s '{{monasca_agent_service}}' {% endif %} \
     --keystone_url '{{keystone_url}}' \
-    --project_name '{{monasca_agent_project}}' \
+    --project_name '{{monasca_agent_project_name}}' \
     {% if monasca_api_url is defined %} --monasca_url '{{monasca_api_url}}' {% endif %} \
     {% if monasca_agent_dimensions is defined %} --dimensions '{{monasca_agent_dimensions}}' {% endif %} \
     {% if monasca_agent_check_frequency is defined %} --check_frequency '{{monasca_agent_check_frequency}}' {% endif %} \

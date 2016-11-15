@@ -1,0 +1,18 @@
+init_config:
+  ssh_port: 22
+  ssh_timeout: 1
+instances:
+{% for h in groups['all']%}
+- alive_test: ssh
+  host_name: {{ h }}
+  name: ssh check for {{ h }}
+  target_hostname: {{ hostvars[h]['ansible_default_ipv4']['address'] }}
+{% endfor %}
+{% if extra_host_alive_checks[0] is defined %}
+{% for h in extra_host_alive_checks%}
+- alive_test: ssh
+  host_name: {{ h.hostname }}
+  name: ssh check for {{ h.hostname }}
+  target_hostname: {{ h.ip }}
+{% endfor %}
+{% endif %}

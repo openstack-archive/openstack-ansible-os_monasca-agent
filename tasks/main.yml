@@ -1,38 +1,80 @@
 ---
+- name: Ensure monasca project exists
+  run_once: true
+  keystone:
+    command: "ensure_project"
+    endpoint: "{{ keystone_service_adminurl }}"
+    login_user: "{{ keystone_admin_user_name }}"
+    login_password: "{{ keystone_auth_admin_password }}"
+    login_project_name: "{{ keystone_admin_tenant_name }}"
+    project_name: "{{ monasca_agent_project_name }}"
+- name: Ensure monasca-agent role exists
+  run_once: true
+  keystone:
+    command: "ensure_role"
+    endpoint: "{{ keystone_service_adminurl }}"
+    login_user: "{{ keystone_admin_user_name }}"
+    login_password: "{{ keystone_auth_admin_password }}"
+    login_project_name: "{{ keystone_admin_tenant_name }}"
+    role_name: "{{ monasca_agent_role_name }}"
+- name: Ensure monasca-agent user exists
+  run_once: true
+  keystone:
+    command: "ensure_user"
+    endpoint: "{{ keystone_service_adminurl }}"
+    login_user: "{{ keystone_admin_user_name }}"
+    login_password: "{{ keystone_auth_admin_password }}"
+    login_project_name: "{{ keystone_admin_tenant_name }}"
+    user_name: "{{ monasca_agent_user_name }}"
+    password: "{{ monasca_agent_password }}"
+    project_name: "{{ monasca_agent_project_name }}"
+- name: Ensure monasca-agent user assigned to monasca-agent role
+  run_once: true
+  keystone:
+    command: "ensure_user_role"
+    endpoint: "{{ keystone_service_adminurl }}"
+    login_user: "{{ keystone_admin_user_name }}"
+    login_password: "{{ keystone_auth_admin_password }}"
+    login_project_name: "{{ keystone_admin_tenant_name }}"
+    user_name: "{{ monasca_agent_user_name }}"
+    tenant_name: "{{ monasca_agent_project_name }}"
+    role_name: "{{ monasca_agent_role_name }}"
+
 - name: Template monasca-setup
   template: dest=/usr/local/bin/monasca-reconfigure src=monasca-reconfigure.j2 owner=root mode=750
 
 - name: Template plugin specific configuration files
-  template: dest={{item.dest}} src={{item.src}} owner=root mode={{item.mode}}
+  template: dest={{item.dest}} src={{item.src}} owner=root mode=640
   when: ansible_hostname | search("{{item.hostname}}")
   with_items:
-    - { hostname: "rabbit" , dest: "/root/.rabbitmq.cnf" , src: ".rabbitmq.cnf.j2" , mode: "640" }
-    - { hostname: "galera" , dest: "/root/.my.cnf" , src: ".my.cnf.j2" , mode: "640" }
-    - { hostname: "horizon" , dest: "/root/.apache.cnf" , src: ".apache.cnf.j2" , mode: "640" }
+    - { hostname: "rabbit" , dest: "/root/.rabbitmq.cnf" , src: ".rabbitmq.cnf.j2" }
+    - { hostname: "galera" , dest: "/root/.my.cnf" , src: ".my.cnf.j2" }
+    - { hostname: "horizon" , dest: "/root/.apache.cnf" , src: ".apache.cnf.j2" }
 
-- name: Grant permissions for process metrics collection
-  user: name=mon-agent groups={{item.groups}}
-  when: ansible_hostname | search("{{item.hostname}}")
-  with_items:
-    - { hostname: "horizon", groups: "www-data" }
-    - { hostname: "rabbit", groups: "rabbitmq" }
+# - name: Grant permissions for process metrics collection
+#   user: name=mon-agent groups={{item.groups}}
+#   when: ansible_hostname | search("{{item.hostname}}")
+#   with_items:
+#     - { hostname: "horizon", groups: "www-data" }
+#     - { hostname: "rabbit", groups: "rabbitmq" }
+#     - { hostname: "swift-proxy", groups: "swift" }
+
+- name: check if rabbitmq api is enabled
+  command: grep rabbitmq_management /etc/rabbitmq/enabled_plugins
+  register: rabbitmq_api_enabled
+  when: ansible_hostname | search("rabbit")
 
 - name: Enable rabbitmq api
   command: /usr/sbin/rabbitmq-plugins enable rabbitmq_management
-  when: ansible_hostname | search("rabbit")
+  when: ansible_hostname | search("rabbit") and rabbitmq_api_enabled.rc == 1
+
+- name: Generate host_alive configuration
+  tags: regen_host_alive_checks
+  template: dest=/etc/monasca/agent/conf.d/host_alive.yaml src=host_alive.yaml.j2 owner=mon-agent group=mon-agent mode=640
+  when: inventory_hostname in host_alive_check_hosts
 
 - name: Run initial monasca-setup
   command: /usr/local/bin/monasca-reconfigure
 
-# Reduce agent permissions
-# * remove shell from agent
-# * 
-
-
 - name: Enable monasca-agent service
   service: name=monasca-agent state=started enabled=yes
-
-
-# import psutil
-# p=psutil.Process(560)
-# p.num_fds()
