@@ -12,6 +12,7 @@ monasca_agent_project_name: monasca-agent
 monasca_agent_role_name: monasca-agent
 host_alive_check_hosts:
 extra_host_alive_checks:
-
+  - { hostname: 'test1',ip:'1.1.1.1' }
+  - { hostname: 'test2',ip:'2.2.2.2' }
 # implement
 skip_repo_utility_hosts: true
