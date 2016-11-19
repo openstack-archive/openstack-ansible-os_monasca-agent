@@ -11,8 +11,15 @@ monasca_agent_password: test
 monasca_agent_project_name: monasca-agent
 monasca_agent_role_name: monasca-agent
 host_alive_check_hosts:
+  # - monasca-1
+  # - monasca-2
+  # - monasca-3
 extra_host_alive_checks:
-  - { hostname: 'test1',ip:'1.1.1.1' }
-  - { hostname: 'test2',ip:'2.2.2.2' }
-# implement
-skip_repo_utility_hosts: true
+  # - { hostname: 'test1',ip:'1.1.1.1' }
+  # - { hostname: 'test2',ip:'2.2.2.2' }
+
+#implement
+extra_agent_hosts:
+  # - { hostname: 'test3',ip:'3.3.3.3' }
+  # - { hostname: 'test4',ip:'4.4.4.4' }
+  # - { hostname: 'test5',ip:'5.5.5.5' }

@@ -71,7 +71,7 @@
 - name: Generate host_alive configuration
   tags: regen_host_alive_checks
   template: dest=/etc/monasca/agent/conf.d/host_alive.yaml src=host_alive.yaml.j2 owner=mon-agent group=mon-agent mode=640
-  when: inventory_hostname in host_alive_check_hosts
+  when: host_alive_check_hosts[0] is defined and inventory_hostname in host_alive_check_hosts
 
 - name: Run initial monasca-setup
   command: /usr/local/bin/monasca-reconfigure

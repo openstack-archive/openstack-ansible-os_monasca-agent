@@ -31,9 +31,22 @@ openstack-ansible repo-build.yml
 
 # Notes
 
+### Adding agent hosts
+
+To add more host to install an agent, populate ```agent_extra_hosts``` with a list of hosts.
+
+```
+extra_agent_hosts:
+  # - { hostname: 'test3',ip:'3.3.3.3' }
+  # - { hostname: 'test4',ip:'4.4.4.4' }
+  # - { hostname: 'test5',ip:'5.5.5.5' }
+```
+
+// implement
+
 ### Skips repo & utility containers
 
-By default, this skips the repo and utility containers as they do not host openstack services. Set ```skip_repo_utility_hosts``` to ```false``` to install the agent on those hosts as well.
+By default the repo and utility containers are skipped as they do not host openstack services.
 
 ### Generate host_alive checks
 
