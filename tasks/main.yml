@@ -1,80 +1,43 @@
 ---
-- name: Ensure monasca project exists
-  run_once: true
-  keystone:
-    command: "ensure_project"
-    endpoint: "{{ keystone_service_adminurl }}"
-    login_user: "{{ keystone_admin_user_name }}"
-    login_password: "{{ keystone_auth_admin_password }}"
-    login_project_name: "{{ keystone_admin_tenant_name }}"
-    project_name: "{{ monasca_agent_project_name }}"
-- name: Ensure monasca-agent role exists
-  run_once: true
-  keystone:
-    command: "ensure_role"
-    endpoint: "{{ keystone_service_adminurl }}"
-    login_user: "{{ keystone_admin_user_name }}"
-    login_password: "{{ keystone_auth_admin_password }}"
-    login_project_name: "{{ keystone_admin_tenant_name }}"
-    role_name: "{{ monasca_agent_role_name }}"
-- name: Ensure monasca-agent user exists
-  run_once: true
-  keystone:
-    command: "ensure_user"
-    endpoint: "{{ keystone_service_adminurl }}"
-    login_user: "{{ keystone_admin_user_name }}"
-    login_password: "{{ keystone_auth_admin_password }}"
-    login_project_name: "{{ keystone_admin_tenant_name }}"
-    user_name: "{{ monasca_agent_user_name }}"
-    password: "{{ monasca_agent_password }}"
-    project_name: "{{ monasca_agent_project_name }}"
-- name: Ensure monasca-agent user assigned to monasca-agent role
-  run_once: true
-  keystone:
-    command: "ensure_user_role"
-    endpoint: "{{ keystone_service_adminurl }}"
-    login_user: "{{ keystone_admin_user_name }}"
-    login_password: "{{ keystone_auth_admin_password }}"
-    login_project_name: "{{ keystone_admin_tenant_name }}"
-    user_name: "{{ monasca_agent_user_name }}"
-    tenant_name: "{{ monasca_agent_project_name }}"
-    role_name: "{{ monasca_agent_role_name }}"
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-- name: Template monasca-setup
-  template: dest=/usr/local/bin/monasca-reconfigure src=monasca-reconfigure.j2 owner=root mode=750
+- name: Gather variables for each operating system
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
+    - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+    - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+    - "{{ ansible_distribution | lower }}.yml"
+    - "{{ ansible_os_family | lower }}-{{ ansible_distribution_version.split('.')[0] }}.yml"
+    - "{{ ansible_os_family | lower }}.yml"
+  tags:
+    - always
 
-- name: Template plugin specific configuration files
-  template: dest={{item.dest}} src={{item.src}} owner=root mode=640
-  when: ansible_hostname | search("{{item.hostname}}")
-  with_items:
-    - { hostname: "rabbit" , dest: "/root/.rabbitmq.cnf" , src: ".rabbitmq.cnf.j2" }
-    - { hostname: "galera" , dest: "/root/.my.cnf" , src: ".my.cnf.j2" }
-    - { hostname: "horizon" , dest: "/root/.apache.cnf" , src: ".apache.cnf.j2" }
+- include: monasca_agent_pre_install.yml
+  tags:
+    - monasca-agent-install
 
-# - name: Grant permissions for process metrics collection
-#   user: name=mon-agent groups={{item.groups}}
-#   when: ansible_hostname | search("{{item.hostname}}")
-#   with_items:
-#     - { hostname: "horizon", groups: "www-data" }
-#     - { hostname: "rabbit", groups: "rabbitmq" }
-#     - { hostname: "swift-proxy", groups: "swift" }
+- include: monasca_agent_install.yml
+  tags:
+    - monasca-agent-install
 
-- name: check if rabbitmq api is enabled
-  command: grep rabbitmq_management /etc/rabbitmq/enabled_plugins
-  register: rabbitmq_api_enabled
-  when: ansible_hostname | search("rabbit")
+- include: monasca_agent_post_install.yml
+  tags:
+    - monasca-agent-config
 
-- name: Enable rabbitmq api
-  command: /usr/sbin/rabbitmq-plugins enable rabbitmq_management
-  when: ansible_hostname | search("rabbit") and rabbitmq_api_enabled.rc == 1
+- include: monasca_agent_init_{{ ansible_service_mgr }}.yml
+  tags:
+    - monasca-agent-config
 
-- name: Generate host_alive configuration
-  tags: regen_host_alive_checks
-  template: dest=/etc/monasca/agent/conf.d/host_alive.yaml src=host_alive.yaml.j2 owner=mon-agent group=mon-agent mode=640
-  when: inventory_hostname in host_alive_check_hosts
-
-- name: Run initial monasca-setup
-  command: /usr/local/bin/monasca-reconfigure
-
-- name: Enable monasca-agent service
-  service: name=monasca-agent state=started enabled=yes
+- name: Flush handlers
+  meta: flush_handlers

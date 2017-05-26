@@ -1,0 +1,19 @@
+# {{ ansible_managed }}
+
+init_config: null
+
+
+instances:
+{% for host in groups['all'] %}
+  - name: {{ ansible_hostname }}
+    host_name: {{ ansible_hostname }}
+    alive_test: ssh
+    dimensions:
+{% if host in groups['all_containers'] %}
+      node_type: container
+      physical_host: {{ physical_host }}
+{% elif host in groups['hosts'] %}
+      node_type: physical_host
+{% endif %}
+
+{% endfor -%}

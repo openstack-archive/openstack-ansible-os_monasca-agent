@@ -1,0 +1,25 @@
+# {{ ansible_managed }}
+
+init_config: null
+
+instances:
+  - built_by: Kafka
+    kafka_connect_str: {{ ansible_host }}:9092
+    per_partition: True
+    full_output: True
+    consumer_groups:
+      1_metrics:
+        - metrics
+      thresh-metric:
+        - metrics
+      thresh-event:
+        - events
+      monasca-notification:
+        - alarm-notifications
+        - retry-notifications
+        - 60-seconds-notifications
+      1_alarm-state-transitions:
+        - alarm-state-transitions
+    dimensions:
+      component: kafka
+      service: infra
