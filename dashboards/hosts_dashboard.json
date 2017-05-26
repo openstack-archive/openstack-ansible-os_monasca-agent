@@ -1,0 +1,2280 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_MON",
+      "label": "Datasource",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "monasca-datasource",
+      "pluginName": "Monasca"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "4.1.0-pre1"
+    }
+  ],
+  "id": null,
+  "title": "OpenStack Host's Metrics",
+  "description": "A collection of OpenStack Host's Metrics",
+  "tags": [
+    "openstack",
+    "monasca",
+    "infra"
+  ],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "sharedCrosshair": true,
+  "hideControls": false,
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "15s",
+      "1m",
+      "15m",
+      "1h"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "${DS_MON}",
+          "value": "${DS_MON}"
+        },
+        "hide": 0,
+        "label": "Datasource",
+        "name": "datasource",
+        "options": [],
+        "query": "monasca-datasource",
+        "refresh": 1,
+        "regex": "",
+        "type": "datasource"
+      },
+      {
+        "auto": false,
+        "auto_count": 30,
+        "auto_min": "10s",
+        "current": {
+          "text": "15s",
+          "value": "15s"
+        },
+        "hide": 0,
+        "label": "Interval",
+        "name": "inter",
+        "options": [
+          {
+            "text": "15s",
+            "value": "15s",
+            "selected": true
+          },
+          {
+            "text": "30s",
+            "value": "30s",
+            "selected": false
+          },
+          {
+            "text": "45s",
+            "value": "45s",
+            "selected": false
+          },
+          {
+            "text": "1m",
+            "value": "1m",
+            "selected": false
+          },
+          {
+            "text": "2m",
+            "value": "2m",
+            "selected": false
+          },
+          {
+            "text": "5m",
+            "value": "5m",
+            "selected": false
+          },
+          {
+            "text": "10m",
+            "value": "10m",
+            "selected": false
+          },
+          {
+            "text": "30m",
+            "value": "30m",
+            "selected": false
+          },
+          {
+            "text": "1h",
+            "value": "1h",
+            "selected": false
+          }
+        ],
+        "query": "15s,30s,45s,1m,2m,5m,10m,30m,1h",
+        "refresh": 2,
+        "type": "interval"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "$datasource",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Hostname",
+        "multi": true,
+        "name": "hostname",
+        "options": [],
+        "query": "hostname",
+        "refresh": 1,
+        "regex": "(?!.*container.*).*",
+        "sort": 1,
+        "tagValuesQuery": null,
+        "tagsQuery": "hostname",
+        "type": "query"
+      }
+    ]
+  },
+  "annotations": {
+    "list": []
+  },
+  "schemaVersion": 13,
+  "version": 0,
+  "links": [],
+  "gnetId": null,
+  "rows": [
+    {
+      "title": "CPU",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "$datasource",
+          "decimals": 2,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 1,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "sort": "avg",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "group": false,
+              "metric": "cpu.percent",
+              "period": "$inter",
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Overall CPU utilization",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percent",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 0,
+          "id": 37,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.idle",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "cpu.idle_perc",
+              "period": "$inter",
+              "refId": "A"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.wait",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "cpu.wait_perc",
+              "period": "$inter",
+              "refId": "B"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.system",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "cpu.system_perc",
+              "period": "$inter",
+              "refId": "C"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.user",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "cpu.user_perc",
+              "period": "$inter",
+              "refId": "D"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Usage",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percent",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 38,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.idle",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "cpu.idle_time",
+              "period": "$inter",
+              "refId": "A"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.wait",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "cpu.wait_time",
+              "period": "$inter",
+              "refId": "B"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.system",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "cpu.system_time",
+              "period": "$inter",
+              "refId": "C"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.user",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "cpu.user_time",
+              "period": "$inter",
+              "refId": "D"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Usage",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "$datasource",
+          "decimals": 2,
+          "editable": true,
+          "error": false,
+          "fill": 0,
+          "id": 40,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.1min",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "load.avg_1_min",
+              "period": "$inter",
+              "refId": "A"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.5min",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "load.avg_5_min",
+              "period": "$inter",
+              "refId": "B"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.15min",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "load.avg_15_min",
+              "period": "$inter",
+              "refId": "C"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Load",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percentunit",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "$datasource",
+          "decimals": 2,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 39,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "group": false,
+              "metric": "cpu.stolen_perc",
+              "period": "$inter",
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Stolen",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percent",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "showTitle": true,
+      "titleSize": "h6",
+      "height": "350",
+      "repeat": null,
+      "repeatRowId": null,
+      "repeatIteration": null,
+      "collapse": false
+    },
+    {
+      "title": "MEMORY",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "$datasource",
+          "decimals": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 41,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "sideWidth": null,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.buffers",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "mem.used_buffers",
+              "period": "$inter",
+              "refId": "A"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.cached",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "mem.used_cache",
+              "period": "$inter",
+              "refId": "B"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.shared",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "mem.used_shared",
+              "period": "$inter",
+              "refId": "C"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.used",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "mem.used_real_mb",
+              "period": "$inter",
+              "refId": "D"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Usage",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decmbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "$datasource",
+          "decimals": 2,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 8,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "sideWidth": null,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "mem.used_real_mb",
+              "period": "$inter",
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Used",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decmbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "$datasource",
+          "decimals": 2,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 4,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "sideWidth": null,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "mem.free_mb",
+              "period": "$inter",
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Free",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decmbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "$datasource",
+          "decimals": 2,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 6,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "sideWidth": null,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.used",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "mem.swap_used_mb",
+              "period": "$inter",
+              "refId": "A"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.free",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "mem.swap_free_mb",
+              "period": "$inter",
+              "refId": "B"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.total",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                }
+              ],
+              "error": "",
+              "metric": "mem.swap_total_mb",
+              "period": "$inter",
+              "refId": "C"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Swap",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decmbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "showTitle": true,
+      "titleSize": "h6",
+      "height": "350",
+      "repeat": null,
+      "repeatRowId": null,
+      "repeatIteration": null,
+      "collapse": true
+    },
+    {
+      "title": "DISK",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 55,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "show": true,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "disk.inode_used_perc",
+              "period": "$inter",
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Used Inodes",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percent",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 56,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "show": true,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "disk.space_used_perc",
+              "period": "$inter",
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Used Space",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percent",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 57,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "show": true,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "/read/",
+              "transform": "negative-Y"
+            }
+          ],
+          "span": 12,
+          "stack": false,
+          "steppedLine": true,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device:read",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "io.read_kbytes_sec",
+              "period": "$inter",
+              "refId": "A"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device:write",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "io.write_kbytes_sec",
+              "period": "$inter",
+              "refId": "B"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "I/O bytes",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "KBs",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "$datasource",
+          "decimals": 0,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 58,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "show": true,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "/read/",
+              "transform": "negative-Y"
+            }
+          ],
+          "span": 6,
+          "stack": false,
+          "steppedLine": true,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device:read",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "io.read_req_sec",
+              "period": "$inter",
+              "refId": "A"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device:write",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "io.write_req_sec",
+              "period": "$inter",
+              "refId": "B"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "I/O requests",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "$datasource",
+          "decimals": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 59,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "show": true,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "/read/",
+              "transform": "negative-Y"
+            }
+          ],
+          "span": 6,
+          "stack": false,
+          "steppedLine": true,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device:read",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "io.read_time_sec",
+              "period": "$inter",
+              "refId": "A"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device:write",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "io.write_time_sec",
+              "period": "$inter",
+              "refId": "B"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "I/O time",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "s",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "showTitle": true,
+      "titleSize": "h6",
+      "height": "350",
+      "repeat": null,
+      "repeatRowId": null,
+      "repeatIteration": null,
+      "collapse": true
+    },
+    {
+      "title": "NETWORK",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 42,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "/in$/",
+              "transform": "negative-Y"
+            }
+          ],
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device.in",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "net.in_bytes_sec",
+              "period": "$inter",
+              "refId": "A"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device.out",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "net.out_bytes_sec",
+              "period": "$inter",
+              "refId": "B"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Usage",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "Bps",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": true,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 43,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": false,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "/in$/",
+              "transform": "negative-Y"
+            }
+          ],
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device.in",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "net.in_packets_sec",
+              "period": "$inter",
+              "refId": "A"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device.out",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "net.out_packets_sec",
+              "period": "$inter",
+              "refId": "B"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Packets",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "pps",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": true,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 44,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": false,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "/in$/",
+              "transform": "negative-Y"
+            }
+          ],
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device.in",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "net.in_errors_sec",
+              "period": "$inter",
+              "refId": "A"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device.out",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "net.out_errors_sec",
+              "period": "$inter",
+              "refId": "B"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Packets Error",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "pps",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": true,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 45,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": false,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "/in$/",
+              "transform": "negative-Y"
+            }
+          ],
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device.in",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "net.in_packets_dropped_sec",
+              "period": "$inter",
+              "refId": "A"
+            },
+            {
+              "aggregator": "avg",
+              "alias": "@hostname.@device.out",
+              "dimensions": [
+                {
+                  "key": "node_type",
+                  "value": "physical_host"
+                },
+                {
+                  "key": "hostname",
+                  "value": "$hostname"
+                },
+                {
+                  "key": "device",
+                  "value": "$all"
+                }
+              ],
+              "error": "",
+              "metric": "net.out_packets_dropped_sec",
+              "period": "$inter",
+              "refId": "B"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Packets Drop",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "pps",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "showTitle": true,
+      "titleSize": "h6",
+      "height": "350",
+      "repeat": null,
+      "repeatRowId": null,
+      "repeatIteration": null,
+      "collapse": true
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+
+init_config: null
+
+
+instances:
+  - apache_status_url: http://localhost/server-status?auto
+    dimensions:
+      component: apache2
+      service: dashboard

@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+
+init_config: null
+
+
+instances:
+{% for host in groups['memcached'] %}
+  - url: {{ host }}
+    dimensions:
+      component: memcached
+      service: infra
+
+{% endfor -%} 
