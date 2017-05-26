@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+
+init_config: null
+
+instances:
+  - built_by: System
+    excluded_interface_re: lo.*|vnet.*|tun.*|ovs.*|tap.*|qbr.*|qvb.*|qvo.*|.*_eth.*
+    name: network_stats
+    dimensions:
+{% if inventory_hostname in groups['all_containers'] %}
+      node_type: container
+      physical_host: {{ physical_host }}
+{% elif inventory_hostname in groups['hosts'] %}
+      node_type: physical_host
+{% endif %}
+

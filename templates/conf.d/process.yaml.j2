@@ -1,0 +1,43 @@
+# {{ ansible_managed }}
+
+init_config: null
+
+instances:
+  - name: monasca-agent
+    detailed: True
+    exact_match: False
+    search_string: ['supervisord', 'monasca-statsd', 'monasca-forwarder', 'monasca-collector']
+    dimensions:
+      component: monasca-agent
+      service: monitoring
+
+{% for service, processes in monasca_agent_os_processes_to_monitor.iteritems()                                                         %}
+{%   for item in processes                                                                                                             %}
+{%     if item.enabled | default(True) and inventory_hostname in groups[item.group|default(item.name|replace('-', '_'))] | default([]) %}
+  - name: {{ item.name }}
+    detailed: True
+    exact_match: False
+    search_string: ['{{ item.name }}']
+    dimensions:
+      component: {{ item.name }}
+      service: {{ service }}
+      type: openstack
+
+{%     endif                                                                                                                           %}
+{%   endfor                                                                                                                            %}
+{% endfor                                                                                                                              %}
+{% for service, processes in monasca_agent_infra_processes_to_monitor.iteritems()                                                      %}
+{%   for item in processes                                                                                                             %}
+{%     if item.enabled | default(True) and inventory_hostname in groups[item.group|default(item.name|replace('-', '_'))] | default([]) %}
+  - name: {{ item.name }}
+    detailed: True
+    exact_match: False
+    search_string: ['{{ item.name }}']
+    dimensions:
+      component: {{ item.name }}
+      service: {{ service }}
+      type: infrastructure
+
+{%     endif                                                                                                                           %}
+{%   endfor                                                                                                                            %}
+{% endfor                                                                                                                              %}
