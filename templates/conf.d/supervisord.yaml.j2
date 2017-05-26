@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+
+init_config: null
+
+instances:
+  - name: {{ ansible_hostname }}
+    socket: unix:///var/tmp/monasca-agent-supervisor.sock
+    dimensions:
+      component: supervisord
+      service: monitoring

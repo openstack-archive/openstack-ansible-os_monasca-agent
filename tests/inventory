@@ -1,0 +1,9 @@
+[all]
+localhost
+infra1
+
+[all_containers]
+infra1
+
+[hosts]
+localhost
