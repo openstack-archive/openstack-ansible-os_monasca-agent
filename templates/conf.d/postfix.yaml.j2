@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+
+init_config: null
+
+instances:
+  - name: /var/spool/postfix
+    directory: /var/spool/postfix
+    queues:
+      - incoming
+      - active
+      - deferred

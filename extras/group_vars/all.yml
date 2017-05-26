@@ -1,0 +1,9 @@
+---
+monasca_agent_venv_tag: "{{ venv_tag }}"
+monasca_agent_venv_download_url: "{{ venv_base_download_url }}/monasca_agent-{{ openstack_release }}-{{ ansible_architecture | lower }}.tgz"
+
+monasca_service_port: 8070
+monasca_service_proto: http
+monasca_service_adminuri_proto: "{{ openstack_service_adminuri_proto | default(monasca_service_proto) }}"
+monasca_service_adminuri: "{{ monasca_service_adminuri_proto }}://{{ internal_lb_vip_address }}:{{ monasca_service_port }}"
+monasca_service_adminurl: "{{ monasca_service_adminuri }}/v2.0"
