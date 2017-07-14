@@ -14,7 +14,7 @@ OpenStack-Ansible Monasca-Agent
 Ansible role for deploying monasca-agent.
 
 Documentation for this project can be found at:
-  http://docs.openstack.org/developer/openstack-ansible-os_monasca-agent/
+  https://docs.openstack.org/openstack-ansible-os_monasca-agent/latest/
 
 The project home is at:
   http://launchpad.net/openstack-ansible
