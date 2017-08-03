@@ -5,8 +5,8 @@ init_config: null
 
 instances:
 {% for host in groups['all'] %}
-  - name: {{ ansible_hostname }}
-    host_name: {{ ansible_hostname }}
+  - name: {{ host }}
+    host_name: {{ host }}
     alive_test: ssh
     dimensions:
 {% if host in groups['all_containers'] %}

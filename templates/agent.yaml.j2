@@ -11,14 +11,14 @@ Api:
   max_measurement_buffer_size: -1
   password: {{ monasca_agent_password }}
   project_domain_id: null
-  project_domain_name: null
+  project_domain_name: {{ monasca_service_domain_name | default("Default") }}
   project_id: null
   project_name: {{ monasca_agent_project_name }}
-  region_name: null
-  service_type: null
+  region_name: {{ monasca_service_region }}
+  service_type: monitoring
   url: {{ monasca_service_adminurl }}
   user_domain_id: null
-  user_domain_name: null
+  user_domain_name: {{ monasca_service_domain_name | default("Default") }}
   username: {{ monasca_agent_user_name }}
 Logging:
   collector_log_file: /var/log/monasca/agent/collector.log
