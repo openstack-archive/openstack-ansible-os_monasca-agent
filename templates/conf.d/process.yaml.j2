@@ -11,7 +11,7 @@ instances:
       component: monasca-agent
       service: monitoring
 
-{% for service, processes in monasca_agent_os_processes_to_monitor.iteritems()                                                         %}
+{% for service, processes in monasca_agent_os_processes_to_monitor.items()                                                         %}
 {%   for item in processes                                                                                                             %}
 {%     if item.enabled | default(True) and inventory_hostname in groups[item.group|default(item.name|replace('-', '_'))] | default([]) %}
   - name: {{ item.name }}
@@ -26,7 +26,7 @@ instances:
 {%     endif                                                                                                                           %}
 {%   endfor                                                                                                                            %}
 {% endfor                                                                                                                              %}
-{% for service, processes in monasca_agent_infra_processes_to_monitor.iteritems()                                                      %}
+{% for service, processes in monasca_agent_infra_processes_to_monitor.items()                                                      %}
 {%   for item in processes                                                                                                             %}
 {%     if item.enabled | default(True) and inventory_hostname in groups[item.group|default(item.name|replace('-', '_'))] | default([]) %}
   - name: {{ item.name }}

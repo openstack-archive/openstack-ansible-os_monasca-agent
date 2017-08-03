@@ -57,6 +57,19 @@
   notify:
     - Restart monasca-agent services
 
+- name: Add monasca-agent user to ceph group
+  user:
+    name: "monasca-agent"
+    groups: "ceph"
+    append: yes
+  when: inventory_hostname in groups['ceph-mon'] | default([])
+
+- name: Add read permission on ceph key to group
+  file:
+    path: "/etc/ceph/ceph.client.admin.keyring"
+    mode: 0640
+  when: inventory_hostname in groups['ceph-mon'] | default([])
+
 - name: Allow monasca user to have passwordless find
   lineinfile:
     dest: /etc/sudoers
