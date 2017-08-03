@@ -34,6 +34,7 @@ Plugins
 By default the monasca-agent role configures the following plugins:
 
    - apache
+   - ceph
    - cpu
    - crash
    - disk
@@ -58,12 +59,3 @@ More information about the available plugins, its configuration
 and metric details is available at the `monasca-agent repository`_.
 
 .. _monasca-agent repository: https://github.com/openstack/monasca-agent/blob/master/docs/Plugins.md
-
-Dashboards
-~~~~~~~~~~
-
-Sample grafana dashboards for visualization of some metrics collected
-by the configured plugins are also available at the
-`monasca-agent role repository`_.
-
-.. _monasca-agent role repository: https://github.com/openstack/openstack-ansible-os_monasca-agent/tree/master/dashboards

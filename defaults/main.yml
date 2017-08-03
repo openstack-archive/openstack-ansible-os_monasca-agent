@@ -47,6 +47,7 @@ monasca_agent_system_user_home: "/var/lib/{{ monasca_agent_system_user_name }}"
 # Monasca-agent configuration
 monasca_agent_user_name: monasca-agent
 monasca_agent_project_name: admin
+monasca_service_region: RegionOne
 
 monasca_agent_check_frequency: 15
 monasca_agent_log_level: WARN
@@ -221,6 +222,7 @@ monasca_agent_os_processes_to_monitor:
     - name: cinder-scheduler
     - name: cinder-volume
     - name: cinder-backup
+      enabled: "{{ cinder_service_backup_program_enabled }}"
 
 haproxy_ssl: True
 galera_monitoring_user: "monitoring"
@@ -230,6 +232,8 @@ monasca_agent_plugins_http_check_disabled:
   - nova_console
 
 monasca_agent_plugins:
+  - name: "ceph"
+    where: "ceph-mon"
   - name: "cpu"
     where: "all"
   - name: "disk"

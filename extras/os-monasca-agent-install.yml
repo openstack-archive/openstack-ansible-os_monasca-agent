@@ -40,8 +40,6 @@
         - crontab
   vars:
     is_metal: "{{ properties.is_metal|default(false) }}"
-  vars_files:
-    - vars/configs/haproxy_config.yml
   tags:
     - monasca
 
