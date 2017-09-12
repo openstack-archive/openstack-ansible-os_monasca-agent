@@ -1,0 +1,10 @@
+Code-Review+2: Major Hayden <major@mhtx.net>
+Code-Review+1: Stefano Canepa (sc) <sc@linux.it>
+Code-Review+2: Markos Chandras (hwoarang) <mchandras@suse.de>
+Workflow+1: Markos Chandras (hwoarang) <mchandras@suse.de>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Tue, 12 Sep 2017 18:06:49 +0000
+Reviewed-on: https://review.openstack.org/502608
+Project: openstack/openstack-ansible-os_monasca-agent
+Branch: refs/heads/master
