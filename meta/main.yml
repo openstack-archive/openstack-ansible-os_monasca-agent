@@ -37,3 +37,6 @@ dependencies:
   - role: apt_package_pinning
     when:
       - ansible_pkg_mgr == 'apt'
+openstack_ansible_info:
+  maturity: incubated
+  created_during: queens
