@@ -1,0 +1,10 @@
+Verified-1: Jenkins
+Code-Review+2: Kevin Carter (cloudnull) <kevin@cloudnull.com>
+Code-Review+2: Jesse Pretorius (odyssey4me) <jesse.pretorius@rackspace.co.uk>
+Workflow+1: Jesse Pretorius (odyssey4me) <jesse.pretorius@rackspace.co.uk>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Wed, 18 Oct 2017 15:02:31 +0000
+Reviewed-on: https://review.openstack.org/510498
+Project: openstack/openstack-ansible-os_monasca-agent
+Branch: refs/heads/master
