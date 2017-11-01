@@ -16,5 +16,5 @@
 # (c) 2017, Jean-Philippe Evrard <jean-philippe.evrard@rackspace.co.uk>
 
 maturity_info:
-  status: incubated
-  created_during: queens
+  status: unmaintained
+  created_during: ocata
