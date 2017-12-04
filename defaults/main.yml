@@ -284,6 +284,8 @@ monasca_agent_requires_pip_packages:
 
 monasca_agent_pip_packages:
   - libvirt-python
+  - keystoneauth1
+  - oslo.utils
   - monasca-agent
   - monasca-common
   - PyMySQl
