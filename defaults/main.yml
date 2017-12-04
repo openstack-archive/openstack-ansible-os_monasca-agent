@@ -283,13 +283,15 @@ monasca_agent_requires_pip_packages:
   - httplib2
 
 monasca_agent_pip_packages:
+  - keystoneauth1
   - libvirt-python
   - monasca-agent
   - monasca-common
+  - oslo.utils
   - PyMySQl
   - python-monascaclient
-  - python-novaclient
   - python-neutronclient
+  - python-novaclient
 
 monasca_agent_services:
   monasca-agent:
