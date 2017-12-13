@@ -1,0 +1,10 @@
+Code-Review+1: Lucas Cavalcante <lucasmcavalcante@gmail.com>
+Code-Review+2: Major Hayden <major@mhtx.net>
+Code-Review+2: Kevin Carter (cloudnull) <kevin@cloudnull.com>
+Workflow+1: Kevin Carter (cloudnull) <kevin@cloudnull.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Wed, 13 Dec 2017 21:37:04 +0000
+Reviewed-on: https://review.openstack.org/525645
+Project: openstack/openstack-ansible-os_monasca-agent
+Branch: refs/heads/master
