@@ -22,7 +22,7 @@ monasca_agent_pip_package_state: "latest"
 monasca_agent_developer_mode: false
 
 monasca_agent_git_repo: "https://git.openstack.org/openstack/monasca-agent"
-monasca_agent_git_install_branch: master
+monasca_agent_git_install_branch: stable/pike
 
 monasca_agent_developer_constraints:
   - "git+{{ monasca_agent_git_repo }}@{{ monasca_agent_git_install_branch }}#egg=monasca-agent"
