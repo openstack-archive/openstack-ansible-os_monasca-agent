@@ -32,7 +32,6 @@ galaxy_info:
     - openstack
 
 dependencies:
+  - apt_package_pinning
   - openstack_openrc
-  - role: apt_package_pinning
-    when:
-      - ansible_pkg_mgr == 'apt'
+  - pip_install
