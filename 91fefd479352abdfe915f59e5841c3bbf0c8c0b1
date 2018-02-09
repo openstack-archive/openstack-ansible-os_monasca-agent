@@ -1,0 +1,9 @@
+Code-Review+2: Markos Chandras (hwoarang) <mchandras@suse.de>
+Code-Review+2: Jesse Pretorius (odyssey4me) <jesse.pretorius@rackspace.co.uk>
+Workflow+1: Jesse Pretorius (odyssey4me) <jesse.pretorius@rackspace.co.uk>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Fri, 09 Feb 2018 10:40:15 +0000
+Reviewed-on: https://review.openstack.org/542735
+Project: openstack/openstack-ansible-os_monasca-agent
+Branch: refs/heads/stable/pike
