@@ -14,7 +14,6 @@
 # Monasca vars
 monasca_agent_venv_tag: "testing"
 monasca_agent_developer_mode: true
-monasca_agent_git_install_branch: master
 monasca_agent_bin: "/openstack/venvs/monasca-agent-{{ monasca_agent_venv_tag }}/bin"
 
 monasca_service_port: 8070
