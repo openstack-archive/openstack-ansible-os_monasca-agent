@@ -59,6 +59,7 @@
         vhost: "{{ item }}"
         read_priv: .*
         state: "present"
+      no_log: true
       when: rabbitmq_monitoring_password is defined
       with_items:
         - "{{ rabbitmq_vhosts.stdout_lines }}"
