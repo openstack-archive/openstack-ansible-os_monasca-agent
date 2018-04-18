@@ -278,7 +278,6 @@ monasca_agent_plugins:
 ## Monasca-agent packages that must be installed before anything else
 monasca_agent_requires_pip_packages:
   - virtualenv
-  - virtualenv-tools
   - python-keystoneclient
   - httplib2
 
