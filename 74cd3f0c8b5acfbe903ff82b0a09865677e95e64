@@ -1,0 +1,9 @@
+Code-Review+2: Mohammed Naser <mnaser@vexxhost.com>
+Code-Review+2: Kevin Carter (cloudnull) <kevin@cloudnull.com>
+Workflow+1: Kevin Carter (cloudnull) <kevin@cloudnull.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Mon, 28 May 2018 08:40:56 +0000
+Reviewed-on: https://review.openstack.org/566638
+Project: openstack/openstack-ansible-os_monasca-agent
+Branch: refs/heads/stable/queens
