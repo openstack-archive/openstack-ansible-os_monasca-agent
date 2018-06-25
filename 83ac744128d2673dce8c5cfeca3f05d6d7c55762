@@ -1,0 +1,10 @@
+Code-Review+2: Mohammed Naser <mnaser@vexxhost.com>
+Code-Review+1: zhongshengping <chdzsp@163.com>
+Code-Review+2: Markos Chandras (hwoarang) <mchandras@suse.de>
+Workflow+1: Markos Chandras (hwoarang) <mchandras@suse.de>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Mon, 25 Jun 2018 11:44:40 +0000
+Reviewed-on: https://review.openstack.org/577447
+Project: openstack/openstack-ansible-os_monasca-agent
+Branch: refs/heads/master
