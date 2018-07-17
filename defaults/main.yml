@@ -311,3 +311,7 @@ monasca_agent_role_project_group: all
 monasca_agent_yaml_overrides: {}
 monasca_agent_supervisor_conf_overrides: {}
 monasca_agent_reconfigure_overrides: {}
+monasca-agent_oslomsg_rpc_host_group: "{{ oslomsg_rpc_host_group | default('rabbitmq_all') }}"
+monasca-agent_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+monasca-agent_oslomsg_rpc_setup_host: "{{ (monasca-agent_oslomsg_rpc_host_group in groups) | ternary(groups[monasca-agent_oslomsg_rpc_host_group][0], 'localhost') }}"
+monasca-agent_oslomsg_notify_setup_host: "{{ (monasca-agent_oslomsg_notify_host_group in groups) | ternary(groups[monasca-agent_oslomsg_notify_host_group][0], 'localhost') }}"

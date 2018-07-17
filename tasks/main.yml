@@ -41,3 +41,22 @@
 
 - name: Flush handlers
   meta: flush_handlers
+- include_tasks: mq_setup.yml
+  when:
+    - "monasca-agent_services['monasca-agent-api']['group'] in group_names"
+    - "inventory_hostname == ((groups[monasca-agent_services['monasca-agent-api']['group']]| intersect(ansible_play_hosts)) | list)[0]"
+  with_items:
+    - oslomsg_setup_host: "{{ monasca-agent_oslomsg_rpc_setup_host }}"
+      oslomsg_userid: "{{ monasca-agent_oslomsg_rpc_userid }}"
+      oslomsg_password: "{{ monasca-agent_oslomsg_rpc_password }}"
+      oslomsg_vhost: "{{ monasca-agent_oslomsg_rpc_vhost }}"
+      oslomsg_transport: "{{ monasca-agent_oslomsg_rpc_transport }}"
+    - oslomsg_setup_host: "{{ monasca-agent_oslomsg_notify_setup_host }}"
+      oslomsg_userid: "{{ monasca-agent_oslomsg_notify_userid }}"
+      oslomsg_password: "{{ monasca-agent_oslomsg_notify_password }}"
+      oslomsg_vhost: "{{ monasca-agent_oslomsg_notify_vhost }}"
+      oslomsg_transport: "{{ monasca-agent_oslomsg_notify_transport }}"
+  tags:
+    - monasca-agent-config
+
+  no_log: true
