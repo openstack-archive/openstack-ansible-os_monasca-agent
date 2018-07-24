@@ -12,7 +12,7 @@
 # limitations under the License.
 
 # Setup the host
-- include: common/test-setup-host.yml
+- include_tasks_tasks: common/test-setup-host.yml
 
 # Install monasca-agent
-- include: test-install-monasca-agent.yml
+- include_tasks_tasks: test-install-monasca-agent.yml

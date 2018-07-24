@@ -12,7 +12,7 @@
 # limitations under the License.
 
 - name: Gather variables for each operating system
-  include_vars: "{{ item }}"
+  include_tasks_tasks_tasks_tasks_vars: "{{ item }}"
   with_first_found:
     - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
     - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
@@ -23,19 +23,19 @@
   tags:
     - always
 
-- include: monasca_agent_pre_install.yml
+- include_tasks_tasks_tasks_tasks: monasca_agent_pre_install.yml
   tags:
     - monasca-agent-install
 
-- include: monasca_agent_install.yml
+- include_tasks_tasks_tasks_tasks: monasca_agent_install.yml
   tags:
     - monasca-agent-install
 
-- include: monasca_agent_post_install.yml
+- include_tasks_tasks_tasks_tasks: monasca_agent_post_install.yml
   tags:
     - monasca-agent-config
 
-- include: monasca_agent_init_{{ ansible_service_mgr }}.yml
+- include_tasks_tasks_tasks_tasks: monasca_agent_init_{{ ansible_service_mgr }}.yml
   tags:
     - monasca-agent-config
 
