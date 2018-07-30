@@ -1,4 +1,6 @@
 ---
+# Copyright 2016 Internet Solutions (Pty) Ltd
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -11,29 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# (c) 2016 Donovan Francesco <donovan.francesco@is.co.za>
+# (c) 2016 Paul Stevens <paul.stevens@is.co.za>
+#
 
-allow_duplicates: yes
+## APT Cache options
+cache_timeout: 600
 
-galaxy_info:
-  author: flaviodsr
-  description: Installation and setup of monasca-agent
-  company: LSD/UFCG
-  license: Apache2
-  min_ansible_install: 2.2
-  platforms:
-    - name: Ubuntu
-      versions:
-        - bionic
-        - xenial
-  categories:
-    - cloud
-    - python
-    - monasca
-    - development
-    - openstack
-
-dependencies:
-  - openstack_openrc
-  - role: apt_package_pinning
-    when:
-      - ansible_pkg_mgr == 'apt'
+## Common apt packages
+monasca_agent_distro_packages:
+  - git
+  - pkg-config
+  - libvirt-dev
