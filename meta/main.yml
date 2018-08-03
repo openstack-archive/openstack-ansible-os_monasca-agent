@@ -25,6 +25,9 @@ galaxy_info:
       versions:
         - bionic
         - xenial
+    - name: EL
+      versions:
+        - 7
   categories:
     - cloud
     - python
