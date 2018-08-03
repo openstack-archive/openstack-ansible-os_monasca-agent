@@ -15,7 +15,7 @@
   package:
     name: "{{ monasca_agent_distro_packages }}"
     state: "{{ monasca_agent_package_state }}"
-    update_cache: "{{ (ansible_pkg_mgr == 'apt') | ternary('yes', omit) }}"
+    update_cache: "{{ (ansible_pkg_mgr in ['apt', 'zypper']) | ternary('yes', omit) }}"
     cache_valid_time: "{{ (ansible_pkg_mgr == 'apt') | ternary(cache_timeout, omit) }}"
   register: install_packages
   until: install_packages is success
@@ -63,21 +63,21 @@
   file:
     path: "{{ monasca_agent_bin | dirname }}"
     state: absent
-  when: monasca_agent_get_venv  is changed
+  when: monasca_agent_get_venv is changed
 
 - name: Create monasca-agent venv dir
   file:
     path: "{{ monasca_agent_bin | dirname }}"
     state: directory
   register: monasca_agent_venv_dir
-  when: monasca_agent_get_venv  is changed
+  when: monasca_agent_get_venv is changed
 
 - name: Unarchive pre-built venv
   unarchive:
     src: "/var/cache/{{ monasca_agent_venv_download_url | basename }}"
     dest: "{{ monasca_agent_bin | dirname }}"
     copy: "no"
-  when: monasca_agent_get_venv  is changed
+  when: monasca_agent_get_venv is changed
   notify:
     - Restart monasca-agent services
 
@@ -99,13 +99,13 @@
   notify:
     - Restart monasca-agent services
 
-- name: CentOS remove python from path first
+- name: Remove python from path first (CentOS, openSUSE)
   file:
     path:  "{{ monasca_agent_bin | dirname }}/bin/python2.7"
     state: "absent"
   when:
-    - ansible_pkg_mgr == 'yum'
-    - monasca_agent_get_venv  is changed
+    - ansible_pkg_mgr in ['yum', 'zypper']
+    - monasca_agent_get_venv is changed
 
 # NOTE(odyssey4me):
 # We reinitialize the venv to ensure that the right
@@ -123,6 +123,6 @@
         --no-pip \
         --no-setuptools \
         --no-wheel
-  when: monasca_agent_get_venv  is changed
+  when: monasca_agent_get_venv is changed
   tags:
     - skip_ansible_lint
