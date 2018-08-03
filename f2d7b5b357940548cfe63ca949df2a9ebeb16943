@@ -1,0 +1,11 @@
+Code-Review+2: Jesse Pretorius (odyssey4me) <jesse.pretorius@rackspace.co.uk>
+Code-Review+1: Guilherme  Steinmuller Pimentel <guilhermesp@lsd.ufcg.edu.br>
+Code-Review+2: Mohammed Naser <mnaser@vexxhost.com>
+Workflow+1: Mohammed Naser <mnaser@vexxhost.com>
+Code-Review+1: daixianmeng <daixianmeng@yovole.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Fri, 03 Aug 2018 07:02:44 +0000
+Reviewed-on: https://review.openstack.org/586933
+Project: openstack/openstack-ansible-os_monasca-agent
+Branch: refs/heads/master
