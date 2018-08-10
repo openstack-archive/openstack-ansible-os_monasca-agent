@@ -275,12 +275,6 @@ monasca_agent_plugins:
   - name: "ntp"
     where: "hosts"
 
-## Monasca-agent packages that must be installed before anything else
-monasca_agent_requires_pip_packages:
-  - virtualenv
-  - python-keystoneclient
-  - httplib2
-
 monasca_agent_pip_packages:
   - keystoneauth1
   - libvirt-python
