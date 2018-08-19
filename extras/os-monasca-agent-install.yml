@@ -16,14 +16,13 @@
   gather_facts: "{{ gather_facts | default(True) }}"
   user: root
   pre_tasks:
-    - include: common-tasks/os-lxc-container-setup.yml
-      static: no
-    - include: common-tasks/os-log-dir-setup.yml
+    - include_tasks: common-tasks/os-lxc-container-setup.yml
+    - include_tasks: common-tasks/os-log-dir-setup.yml
       vars:
         log_dirs:
           - src: "/openstack/log/{{ inventory_hostname }}-monasca"
             dest: "/var/log/monasca"
-    - include: common-tasks/package-cache-proxy.yml
+    - include_tasks: common-tasks/package-cache-proxy.yml
   roles:
     - role: "os_monasca-agent"
     - role: "openstack_openrc"

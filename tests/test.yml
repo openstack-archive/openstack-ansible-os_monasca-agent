@@ -12,7 +12,7 @@
 # limitations under the License.
 
 # Setup the host
-- include: common/test-setup-host.yml
+- import_playbook: common/test-setup-host.yml
 
 # Install monasca-agent
-- include: test-install-monasca-agent.yml
+- import_playbook: test-install-monasca-agent.yml
