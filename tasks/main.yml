@@ -23,19 +23,19 @@
   tags:
     - always
 
-- include: monasca_agent_pre_install.yml
+- include_tasks: monasca_agent_pre_install.yml
   tags:
     - monasca-agent-install
 
-- include: monasca_agent_install.yml
+- include_tasks: monasca_agent_install.yml
   tags:
     - monasca-agent-install
 
-- include: monasca_agent_post_install.yml
+- include_tasks: monasca_agent_post_install.yml
   tags:
     - monasca-agent-config
 
-- include: monasca_agent_init_{{ ansible_service_mgr }}.yml
+- include_tasks: monasca_agent_init_{{ ansible_service_mgr }}.yml
   tags:
     - monasca-agent-config
 
