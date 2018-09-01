@@ -27,8 +27,19 @@ monasca_agent_git_install_branch: master
 monasca_agent_developer_constraints:
   - "git+{{ monasca_agent_git_repo }}@{{ monasca_agent_git_install_branch }}#egg=monasca-agent"
 
+# TODO(odyssey4me):
+# This can be simplified once all the roles are using
+# python_venv_build. We can then switch to using a
+# set of constraints in pip.conf inside the venv,
+# perhaps prepared by giving a giving a list of
+# constraints to the role.
+monasca_agent_pip_install_args: >-
+  {{ monasca_agent_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
+  {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''), '') }}
+  {{ pip_install_options | default('') }}
+
 # Name of the virtual env to deploy into
-monasca_agent_venv_tag: untagged
+monasca_agent_venv_tag: "{{ venv_tag | default('untagged') }}"
 monasca_agent_bin: "/openstack/venvs/monasca-agent-{{ monasca_agent_venv_tag }}/bin"
 monasca_agent_etc_dir: "{{ monasca_agent_bin | dirname }}/etc/monasca/agent"
 
