@@ -1,0 +1,9 @@
+Code-Review+2: Jean-Philippe Evrard <jean-philippe@evrard.me>
+Code-Review+2: Markos Chandras (hwoarang) <mchandras@suse.de>
+Workflow+1: Markos Chandras (hwoarang) <mchandras@suse.de>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Wed, 12 Sep 2018 16:21:54 +0000
+Reviewed-on: https://review.openstack.org/601854
+Project: openstack/openstack-ansible-os_monasca-agent
+Branch: refs/heads/stable/rocky
