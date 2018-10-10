@@ -1,0 +1,9 @@
+Code-Review+2: Jesse Pretorius (odyssey4me) <jesse.pretorius@rackspace.co.uk>
+Code-Review+2: Jonathan Rosser <jonathan.rosser@rd.bbc.co.uk>
+Workflow+1: Jonathan Rosser <jonathan.rosser@rd.bbc.co.uk>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Wed, 10 Oct 2018 20:33:32 +0000
+Reviewed-on: https://review.openstack.org/609292
+Project: openstack/openstack-ansible-os_monasca-agent
+Branch: refs/heads/stable/rocky
