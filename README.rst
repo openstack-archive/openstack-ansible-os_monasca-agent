@@ -20,7 +20,7 @@ Release notes for the project can be found at:
   https://docs.openstack.org/releasenotes/openstack-ansible-os_monasca-agent/
 
 The project source code repository is located at:
-  https://git.openstack.org/cgit/openstack/openstack-ansible-os_monasca-agent/
+  https://opendev.org/openstack/openstack-ansible-os_monasca-agent/
 
 The project source code repository is located at:
   https://git.openstack.org/cgit/openstack/openstack-ansible-os_monasca-agent/
