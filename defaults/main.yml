@@ -179,9 +179,6 @@ monasca_agent_os_processes_to_monitor:
     - name: neutron-metadata-agent
     - name: neutron-metering-agent
     - name: neutron-l3-agent
-    - name: neutron-lbaasv2-agent
-      group: neutron_lbaas_agent
-      enabled: "{{ neutron_plugin_base is defined and 'neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2' in neutron_plugin_base }}"
     - name: neutron-bgp-dragent
       enabled: "{{ neutron_bgp is defined and neutron_bgp | bool }}"
     - name: neutron-vpnaas-agent
