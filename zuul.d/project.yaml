@@ -16,5 +16,8 @@
     templates:
       - openstack-ansible-linters
       - check-requirements
+      - openstack-ansible-deploy-aio_metal-jobs
+      # NOTE: Need to work on distro-based pkg installs for monasca agent
+      # before adding `openstack-ansible-deploy-aio_distro_metal-jobs` template
       - publish-openstack-docs-pti
       - release-notes-jobs-python3
