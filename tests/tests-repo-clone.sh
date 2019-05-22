@@ -20,7 +20,7 @@
 
 # WARNING:
 # This file is maintained in the openstack-ansible-tests repository:
-# https://git.openstack.org/cgit/openstack/openstack-ansible-tests
+# https://opendev.org/openstack/openstack-ansible-tests
 # If you need to change this script, then propose the change there.
 # Once it merges, the change will be replicated to the other repositories.
 
@@ -33,7 +33,7 @@ set -e
 export TESTING_HOME=${TESTING_HOME:-$HOME}
 export WORKING_DIR=${WORKING_DIR:-$(pwd)}
 export CLONE_UPGRADE_TESTS=${CLONE_UPGRADE_TESTS:-no}
-export ZUUL_TESTS_CLONE_LOCATION="/home/zuul/src/git.openstack.org/openstack/openstack-ansible-tests"
+export ZUUL_TESTS_CLONE_LOCATION="/home/zuul/src/opendev.org/openstack/openstack-ansible-tests"
 
 ## Functions -----------------------------------------------------------------
 
@@ -56,7 +56,7 @@ EOF
 # We only want to use zuul-cloner if we detect
 # zuul v2 running, so we check for the presence
 # of the ZUUL_REF environment variable.
-# ref: http://git.openstack.org/cgit/openstack-infra/zuul/tree/zuul/ansible/filter/zuul_filters.py?h=feature/zuulv3#n17
+# ref: http://opendev.org/openstack-infra/zuul/tree/zuul/ansible/filter/zuul_filters.py?h=feature/zuulv3#n17
 if [[ -x /usr/zuul-env/bin/zuul-cloner ]] && [[ "${ZUUL_REF:-none}" != "none" ]]; then
 
     # Prepare the clonemap for zuul-cloner to use
@@ -66,7 +66,7 @@ if [[ -x /usr/zuul-env/bin/zuul-cloner ]] && [[ "${ZUUL_REF:-none}" != "none" ]]
     /usr/zuul-env/bin/zuul-cloner \
         --cache-dir /opt/git \
         --map ${TESTING_HOME}/tests-clonemap.yaml \
-        https://git.openstack.org \
+        https://opendev.org \
         openstack/openstack-ansible-tests
 
     # Clean up the clonemap.
@@ -87,7 +87,7 @@ elif [[ ! -d tests/common ]]; then
         ln -s ${WORKING_DIR} ${WORKING_DIR}/tests/common
 
     # In zuul v3 any dependent repository is placed into
-    # /home/zuul/src/git.openstack.org, so we check to see
+    # /home/zuul/src/opendev.org, so we check to see
     # if there is a tests checkout there already. If so, we
     # symlink that and use it.
     elif [[ -d "${ZUUL_TESTS_CLONE_LOCATION}" ]]; then
@@ -97,7 +97,7 @@ elif [[ ! -d tests/common ]]; then
     # repo in some way, so just clone it from upstream.
     else
         git clone \
-            https://git.openstack.org/openstack/openstack-ansible-tests \
+            https://opendev.org/openstack/openstack-ansible-tests \
             ${WORKING_DIR}/tests/common
     fi
 fi
@@ -111,7 +111,7 @@ fi
 if [[ "${CLONE_UPGRADE_TESTS}" == "yes" ]]; then
     if [[ ! -d "${WORKING_DIR}/tests/common/previous" ]]; then
         git clone -b stable/queens \
-            https://git.openstack.org/openstack/openstack-ansible-tests \
+            https://opendev.org/openstack/openstack-ansible-tests \
             ${WORKING_DIR}/tests/common/previous
   fi
 fi
