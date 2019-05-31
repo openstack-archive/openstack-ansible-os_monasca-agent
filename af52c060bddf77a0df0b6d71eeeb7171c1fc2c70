@@ -1,0 +1,9 @@
+Code-Review+2: Jonathan Rosser <jonathan.rosser@rd.bbc.co.uk>
+Code-Review+2: Logan V <logan2211@gmail.com>
+Workflow+1: Logan V <logan2211@gmail.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Fri, 31 May 2019 03:53:38 +0000
+Reviewed-on: https://review.opendev.org/660272
+Project: openstack/openstack-ansible-os_monasca-agent
+Branch: refs/heads/master
